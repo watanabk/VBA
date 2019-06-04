@@ -1,32 +1,44 @@
 # validate-empty-cells-check
 未入力のセルがある場合は背景色を黄色に、入力済みのセルは背景色を初期化する。
 
+1. 「開発」タブ > コントロール > 挿入 > ボタン（フォームコントロール）
+1. 適当な位置に配置
+1. マクロ名を `Button1_Click()` に変更
+1. Microsoft Visual Basic for Applications が開くので
+1. `標準モジュール` の `Module1` に以下のプログラムをコピペ
+
 ```vba
 Sub Button1_Click()
-    '' 開始列番号
+    '' 判定開始列番号（C列 = 3）
     Dim beginColNo As Long
-    beginColNo = 1
-    '' 終了列番号
+    beginColNo = 3
+    '' 判定終了列番号（M列 = 13）
     Dim endColNo As Long
     endColNo = 13
     
-    '' A列の最終行を取得します。
-    '' （A列に必ず値が入る想定で作成します。）
+    '' A, B列にはどちらか1列しか値が設定されないため、
+    '' A列（1）または、B列（2）の最大最終行を求めます。
+    Dim lastRowA As Long
+    lastRowA = Cells(Rows.Count, 1).End(xlUp).Row
+    Dim lastRowB As Long
+    lastRowB = Cells(Rows.Count, 2).End(xlUp).Row
     Dim lastRow As Long
-    lastRow = Cells(Rows.Count, 1).End(xlUp).Row
+    If lastRowA <= lastRowB Then
+        lastRow = lastRowB
+    Else
+        lastRow = lastRowA
+    End If
     
-    '' 未入力セル数
+    '' 未入力セル数をカウントカウントするための変数
     Dim emptyCellCoount As Long
     emptyCellCoount = 0
     
-    '' 行ごとに処理します。
+    '' 1行ごとに処理します。
     Dim rowNo As Long
     For rowNo = 1 To lastRow
-        '' 行の開始列（beginColNo）から終了列（endColNo）までの範囲を定義します。
+        '' 判定開始列（beginColNo）から判定終了列（endColNo）のセルを1列ずつチェック
         Dim rng As range
         Set rng = range(Cells(rowNo, beginColNo), Cells(rowNo, endColNo))
-        
-        ''開始列（beginColNo）から終了列（endColNo）のセルを1列ずつチェック
         For colNo = beginColNo To endColNo
             '' 未入力のセルは色を黄色に。入力済みの列は背景色をクリア。
             If Cells(rowNo, colNo).Value = "" Then
