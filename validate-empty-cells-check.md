@@ -21,6 +21,9 @@ Sub Button1_Click()
     Dim checkStartRowNo As Long
     checkStartRowNo = 2
     
+    '' 列の色クリア処理
+    range(Columns(1), Columns(endColNo)).Interior.ColorIndex = 0
+    
     '' A列（1）の最終行を求めます。
     '' （A列には行数を設定する予定のため、必ず値が設定されている。）
     Dim lastRow As Long
@@ -33,6 +36,12 @@ Sub Button1_Click()
     '' 1行ごとに処理します。
     Dim rowNo As Long
     For rowNo = checkStartRowNo To lastRow
+        '' B列とC列はどちらか一方が入力されていればOK
+        If (Cells(rowNo, 2).Value = "" And Cells(rowNo, 3).Value = "") Then
+            Cells(rowNo, 2).Interior.Color = RGB(255, 255, 0)
+            Cells(rowNo, 3).Interior.Color = RGB(255, 255, 0)
+        End If
+    
         '' 判定開始列（beginColNo）から判定終了列（endColNo）のセルを1列ずつチェック
         Dim rng As range
         Set rng = range(Cells(rowNo, beginColNo), Cells(rowNo, endColNo))
@@ -42,16 +51,13 @@ Sub Button1_Click()
             If Cells(rowNo, colNo).Value = "" Then
                 Cells(rowNo, colNo).Interior.Color = RGB(255, 255, 0)
                 emptyCellCoount = emptyCellCoount + 1
-            Else
-                Cells(rowNo, colNo).Interior.ColorIndex = 0
             End If
         Next colNo
     Next rowNo
     
+    '' 未入力の件数が1件以上あったらメッセージボックスを表示
     If emptyCellCoount > 0 Then
         MsgBox ("未入力のセルが存在します。")
-    Else
-        '' 未入力のセルなし
     End If
 End Sub
 ```
