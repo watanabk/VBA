@@ -36,6 +36,7 @@ Sub Button1_Click()
         '' 判定開始列（beginColNo）から判定終了列（endColNo）のセルを1列ずつチェック
         Dim rng As range
         Set rng = range(Cells(rowNo, beginColNo), Cells(rowNo, endColNo))
+        Dim colNo As Long
         For colNo = beginColNo To endColNo
             '' 未入力のセルは色を黄色に。入力済みの列は背景色をクリア。
             If Cells(rowNo, colNo).Value = "" Then
