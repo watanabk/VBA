@@ -1,4 +1,4 @@
-# vba-validate-input-only-either
+# validate-input-only-either
 B列とC列のどちらか一方のセルしか入力できないようにする入力チェック
 
 ```vba
