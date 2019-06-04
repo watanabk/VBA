@@ -21,8 +21,9 @@ Sub Button1_Click()
     Dim checkStartRowNo As Long
     checkStartRowNo = 2
     
-    '' 列の色クリア処理
-    range(Columns(1), Columns(endColNo)).Interior.ColorIndex = 0
+    '' ヘッダを除く2行目以降のセルの色を一括クリア
+    range("A2", Cells(Rows.Count, 1).End(xlUp)).EntireRow.Interior.ColorIndex = 0
+    
     
     '' A列（1）の最終行を求めます。
     '' （A列には行数を設定する予定のため、必ず値が設定されている。）
