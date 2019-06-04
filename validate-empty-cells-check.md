@@ -9,25 +9,22 @@
 
 ```vba
 Sub Button1_Click()
-    '' 判定開始列番号（C列 = 3）
+    '' 判定開始列番号
+    '' D列（4）から判定を行うようにする。
     Dim beginColNo As Long
-    beginColNo = 3
+    beginColNo = 4
     '' 判定終了列番号（M列 = 13）
     Dim endColNo As Long
     endColNo = 13
+    '' チェック処理を開始する行数
+    '' 1行目はヘッダが設定されるため、2行目からチェック処理を行うようにする。
+    Dim checkStartRowNo As Long
+    checkStartRowNo = 2
     
-    '' A, B列にはどちらか1列しか値が設定されないため、
-    '' A列（1）または、B列（2）の最大最終行を求めます。
-    Dim lastRowA As Long
-    lastRowA = Cells(Rows.Count, 1).End(xlUp).Row
-    Dim lastRowB As Long
-    lastRowB = Cells(Rows.Count, 2).End(xlUp).Row
+    '' A列（1）の最終行を求めます。
+    '' （A列には行数を設定する予定のため、必ず値が設定されている。）
     Dim lastRow As Long
-    If lastRowA <= lastRowB Then
-        lastRow = lastRowB
-    Else
-        lastRow = lastRowA
-    End If
+    lastRow = Cells(Rows.Count, 1).End(xlUp).Row
     
     '' 未入力セル数をカウントカウントするための変数
     Dim emptyCellCoount As Long
@@ -35,7 +32,7 @@ Sub Button1_Click()
     
     '' 1行ごとに処理します。
     Dim rowNo As Long
-    For rowNo = 1 To lastRow
+    For rowNo = checkStartRowNo To lastRow
         '' 判定開始列（beginColNo）から判定終了列（endColNo）のセルを1列ずつチェック
         Dim rng As range
         Set rng = range(Cells(rowNo, beginColNo), Cells(rowNo, endColNo))
