@@ -1,5 +1,5 @@
 # vba-validate-input-only-either
-どちらか一方のセルしか入力できないようにする入力チェック
+B列とC列のどちらか一方のセルしか入力できないようにする入力チェック
 
 ```vba
 Private Sub Worksheet_Change(ByVal Target As Range)
