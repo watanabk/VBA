@@ -22,7 +22,7 @@ Sub Button1_Click()
     checkStartRowNo = 2
     
     '' ヘッダを除く2行目以降のセルの色を一括クリア
-    range("A2", Cells(Rows.Count, 1).End(xlUp)).EntireRow.Interior.ColorIndex = 0
+    range("A2", Cells(Rows.Count, 1).End(xlDown)).EntireRow.Interior.ColorIndex = 0
     
     
     '' A列（1）の最終行を求めます。
